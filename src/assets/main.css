@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  width: 6px;
+  background-color: rgba(117, 119, 113, 0.726);
+  border-radius: 6px;
+}
+
+:root {
+  --theme-text-color: #212129;
+}
+
+/* 暗黑模式 */
+.dark {
+  background-color: #212129;
+  color: #ddddf0;
+  --theme-text-color: #ddddf0;
+}
+
+/* parseMarkdown 组件的文字的样式 */
+div.vuepress-markdown-body {
+  color: var(--theme-text-color);
+}
