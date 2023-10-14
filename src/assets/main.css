@@ -14,6 +14,7 @@
 
 :root {
   --theme-text-color: #212129;
+  --theme-bg-color: #ffffff;
 }
 
 /* 暗黑模式 */
@@ -21,11 +22,13 @@
   background-color: #212129;
   color: #ddddf0;
   --theme-text-color: #ddddf0;
+  --theme-bg-color: #ffffff00;
 }
 
 /* parseMarkdown 组件的文字的样式 */
 div.vuepress-markdown-body {
   color: var(--theme-text-color);
+  background-color: var(--theme-bg-color);
 }
 div.vuepress-markdown-body:not(.custom) {
   padding: 0;
