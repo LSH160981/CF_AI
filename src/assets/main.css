@@ -27,6 +27,6 @@
 div.vuepress-markdown-body {
   color: var(--theme-text-color);
 }
-.vuepress-markdown-body:not(.custom) {
+div.vuepress-markdown-body:not(.custom) {
   padding: 0;
 }

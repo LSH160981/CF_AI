@@ -1,14 +1,10 @@
-# test
+## 源码地址
 
-This template should help get you started developing with Vue 3 in Vite.
+https://github.com/anse-app/chatgpt-demo
 
-## Recommended IDE Setup
+## 重点
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+> 原项目是用`Astro`写的， 我自己使用 Vue3 重写的一遍也不是很完整, chat 接口是 CF `Beta`AI
 
 ## Project Setup
 

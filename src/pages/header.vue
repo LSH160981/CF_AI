@@ -6,7 +6,7 @@
         @click="iconHandler"
         class="w-[48px] h-[48px] flex justify-center items-center rounded-lg hover:bg-gray-300 hover:bg-opacity-50">
         <img
-          :src="themeStore.sun_or_moon ? 'src/assets/sun.svg' : 'src/assets/moon.svg'"
+          :src="themeStore.sun_or_moon ? `../src/assets/sun.svg` : '../src/assets/moon.svg'"
           class="w-[30px] h-[30px]" />
       </div>
     </div>

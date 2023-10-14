@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from "axios";
+import axiosClient from "@/api/axiosClient.js";
 
 
 // 第一个参数是你的应用中 Store 的唯一 ID。 
@@ -37,7 +37,7 @@ export const useMessageStore = defineStore('message', {
                 data: 'vue的事件修饰符'
              */
             // 发起网络请求获取数据
-            await axios.post(`/api/?content=${this.currentMSG}`).then((response) => {
+            await axiosClient.post(`/api/?content=${this.currentMSG}`).then((response) => {
                 let result = response.data[0]
                 // console.log(result);
                 let tempStr = "";
