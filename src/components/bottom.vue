@@ -1,7 +1,7 @@
 <template>
   <button
     @click="scroll_bottom"
-    class="w-9 h-9 fixed bottom-6 left-5 p-1 text-base rounded-lg hover:bg-gray-300 hover:bg-opacity-50">
+    class="w-9 h-9 fixed bottom-6 left-5 p-1 text-base rounded-lg flex justify-center items-center hover:bg-gray-300 hover:bg-opacity-50">
     <svg
       t="1697120382823"
       class="icon"

@@ -32,7 +32,7 @@
   <!-- 个人的信息导航  源代码的出处 -->
   <p class="mt-8 text-xs opacity-40 select-none">
     <span class="pr-1">Made by</span>
-    <a href="https://github.com/LSH160981" target="_blank"> XiaoLiao </a>
+    <a href="https://github.com/LSH160981/CF_AI" target="_blank"> XiaoLiao </a>
     <span class="px-1">|</span>
     <a href="https://github.com/ddiu8081/chatgpt-demo" target="_blank"> Source Code </a>
   </p>
