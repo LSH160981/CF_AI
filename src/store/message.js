@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axiosClient from "@/api/axiosClient.js";
-
+import axios from 'axios';
 
 // 第一个参数是你的应用中 Store 的唯一 ID。 
 export const useMessageStore = defineStore('message', {
@@ -42,6 +42,44 @@ export const useMessageStore = defineStore('message', {
             }).catch((error) => {
                 console.log(error.message);
             });
+            // 将页面滚动到底部
+            window.scroll({
+                top: document.body.scrollHeight,
+                behavior: 'smooth' // 可以使滚动平滑
+            });
+            // 恢复初始状态让，用户输入内容
+            this.is_AI_think = false
+        },
+        async get_msg_by_llm() {
+            // console.log(this.currentMSG);
+            this.messages.push({
+                role: "user",
+                content: this.currentMSG
+            })
+
+            // AI正在思考。 作用:不让用户连续输入文字
+            this.is_AI_think = true
+
+            const OPENAI_API_KEY = 'sk-4fIOxiY8PDlxuqbNQvvPhZm4wtyEuiquroVpD1bT2jK2fZsA';
+            const endpoint = "https://openkey.cloud/v1/chat/completions";
+            const data = {
+                // model: "gpt-3.5-turbo",
+                model: "gpt-3.5-turbo-16k-0613",
+                messages: [{ role: "user", content: this.currentMSG }],
+                temperature: 0.7,
+            };
+            await axios.post(endpoint, data, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${OPENAI_API_KEY}`,
+                },
+            }).then((response) => {
+                let resultMSG = response.data.choices[0].message.content;
+                this.messages.push({ role: "system", content: resultMSG })
+            }).catch((error) => {
+                console.error(error);
+            });
+
             // 将页面滚动到底部
             window.scroll({
                 top: document.body.scrollHeight,

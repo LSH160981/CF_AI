@@ -20,7 +20,7 @@ let outputTypeText = ref("");
 // 逐步输出主函数
 const typeText = (msgContent) => {
   let index = 0;
-  const delay = 25; // 输出速度（每毫秒的字符数）
+  const delay = 15; // 输出速度（每毫秒的字符数）
 
   // 开启定时器，并做好标识
   const typingInterval = setInterval(() => {

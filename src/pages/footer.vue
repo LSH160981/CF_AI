@@ -74,7 +74,8 @@ const sendHandler = () => {
   // 更改 信息仓库 的status 内容
   MessageStore.currentMSG = send_input.value;
   // 通知仓库获取数据
-  MessageStore.get_msg_by_cf();
+  // MessageStore.get_msg_by_cf();
+  MessageStore.get_msg_by_llm();
   send_input.value = ""; // 置空输入框
 };
 // 小扫把按钮 回调
