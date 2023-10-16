@@ -6,5 +6,5 @@
 
 <script setup>
 // 引用 markdowm 解析组件
-import ParseMarkdown from "@/components/parseMarkdown.vue";
+import ParseMarkdown from "@/components/parseMD/parseMarkdown.vue";
 </script>

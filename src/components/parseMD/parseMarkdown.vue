@@ -9,14 +9,16 @@
     <!-- (用户的提问|系统的回复)展示 -->
     <div class="message break-words overflow-hidden">
       <p class="py-5">
-        <!-- 在main.js v-md-preview 已经是全局组件 -->
-        <v-md-preview :text="item.content"></v-md-preview>
+        <!-- 把每一项传给子组件 -->
+        <ParseMain :MSG="item"></ParseMain>
       </p>
     </div>
   </div>
 </template>
 
 <script setup>
+// 引入parseMain组件
+import ParseMain from "./parseMain.vue";
 // pinia 的信息仓库
 import { useMessageStore } from "@/store/message.js";
 // 实例化 信息仓库

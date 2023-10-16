@@ -29,13 +29,6 @@ export const useMessageStore = defineStore('message', {
             // AI正在思考。 作用:不让用户连续输入文字
             this.is_AI_think = true
 
-            /**
-             *  
-                method: "POST",
-                url: `/api/?content=${this.currentMSG}`,
-                headers: {},
-                data: 'vue的事件修饰符'
-             */
             // 发起网络请求获取数据
             await axiosClient.post(`/api/?content=${this.currentMSG}`).then((response) => {
                 let result = response.data[0]
