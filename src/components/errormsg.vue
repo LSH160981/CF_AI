@@ -1,8 +1,7 @@
 <template>
   <div
     name="fade"
-    class="md:max-w-[33.3%] h-16 bg-red-500 bg-opacity-80 rounded-3xl flex justify-start items-center flex-nowrap fixed top-7 left-1/2 -translate-x-1/2
-    maxd:w-5/6">
+    class="max-w-[33.3%] h-16 bg-red-500 bg-opacity-80 rounded-3xl flex justify-start items-center flex-nowrap fixed top-7 left-1/2 -translate-x-1/2 maxd:w-5/6">
     <img src="@/assets/error.svg" class="w-[45px] h-[45px] mx-3" />
     <span class="truncate text-xl mr-3">{{ errortitle || "发生错误！" }}</span>
   </div>
