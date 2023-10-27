@@ -106,7 +106,14 @@ watch(
   () => MessageStore.errorMSG,
   (newValue) => {
     // console.log(newValue);
-    ctrl_error_CV(newValue);
+    // 如果错误信息为空，不要启用错误提示组件
+    if (MessageStore.errorMSG == "") {
+      return;
+    } else {
+      ctrl_error_CV(newValue);
+      // 提示:这里的 赋值 同样会触发watch
+      MessageStore.errorMSG = "";
+    }
   }
 );
 </script>

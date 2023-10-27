@@ -1,7 +1,7 @@
 <template>
   <!-- v-for遍历 信息仓库 数据 -->
   <div
-    class="flex gap-3 rounded-lg border-b-2 border-b-gray-300"
+    class="flex gap-3 rounded-lg border-b-2 border-b-gray-300 z-[999]"
     v-for="(item, index) in MessageStore.messages"
     :key="index">
     <!-- 动态的class区分(用户|系统)的头像 -->
