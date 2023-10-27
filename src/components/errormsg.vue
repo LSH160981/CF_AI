@@ -1,5 +1,5 @@
 <template>
-  <div class="w-5/6 fixed top-7 left-1/2 -translate-x-1/2 flex justify-center text-center">
+  <div class="w-5/6 fixed top-7 left-1/2 -translate-x-1/2 flex justify-center text-center  z-[99]">
     <transition name="fade">
       <div
         v-if="show"
