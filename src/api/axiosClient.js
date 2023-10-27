@@ -3,7 +3,7 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    timeout: 5000
+    timeout: 10000
 });
 
 //请求拦截器:将来项目中【N个请求】，只要发请求,会触发请求拦截器!!! 在发送请求前 做一些事情
@@ -18,9 +18,12 @@ axiosClient.interceptors.response.use((res) => {
     return res.data;
 }, (err) => {
     //失败的回调
+    //  timeout of 5000ms exceeded  
+    if (err.message.includes("timeout")) {
+        return Promise.reject("服务器超时");
+    }
     // 获取失败的信息
     let errorMSG = JSON.parse(err.request.response).error.message || "发生错误,请联系XiaoLiao";
-    // console.log(errorMSG);
     return Promise.reject(errorMSG);
 });
 
