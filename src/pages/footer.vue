@@ -24,12 +24,12 @@
   </div>
   <!-- 当发起了网络请求 不让用户继续输入 -->
   <div
+    v-else
     class="gen-text-wrapper bg-gray-400 rounded"
-    :class="{ 'bg-opacity-30': themeStore.sun_or_moon ? true : false }"
-    v-else>
+    :class="{ 'bg-opacity-30': themeStore.sun_or_moon ? true : false }">
     <span class="h-12 leading-[3rem] select-none">CF AI is thinking...</span>
   </div>
-  <!-- 个人的信息导航  源代码的出处 -->
+  <!-- 个人的信息导航 | 源代码的出处 -->
   <p class="mt-8 text-xs opacity-40 select-none">
     <span class="pr-1">Made by</span>
     <a href="https://github.com/LSH160981/CF_AI" target="_blank"> XiaoLiao </a>
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 // 错误信息提示的组件
 import Errormsg from "@/components/errormsg.vue";
 // pinia 的信息仓库
@@ -63,12 +63,7 @@ const sendHandler = () => {
   // 判断输入框的内容是否合法
   if (send_input.value.trim() == "") {
     send_input.value = ""; // 置空输入框
-    errortitle.value = "请输入内容！"; // 错误的提示信息
-    show_error_CV.value = true; // 启动错误提示组件
-    // 3.5秒后 销毁 错误提示组件
-    setTimeout(() => {
-      show_error_CV.value = false;
-    }, 3500);
+    ctrl_error_CV("请输入内容!");
     return;
   }
   // 更改 信息仓库 的status 内容
@@ -93,6 +88,27 @@ const input_keydown = (even) => {
     even.target.blur();
   }
 };
+
+// 对错误提示组件的控制
+const ctrl_error_CV = (errMsg) => {
+  // 启动错误提示组件
+  show_error_CV.value = true;
+  // 错误的提示信息
+  errortitle.value = errMsg;
+  // 3.5秒后 销毁 错误提示组件
+  setTimeout(() => {
+    show_error_CV.value = false;
+  }, 3500);
+};
+
+// MessageStore.errorMSG,是axios返回的错误信息，本来是空的，一旦发生变化就启用【错误提示组件】
+watch(
+  () => MessageStore.errorMSG,
+  (newValue) => {
+    // console.log(newValue);
+    ctrl_error_CV(newValue);
+  }
+);
 </script>
 
 <style scoped>

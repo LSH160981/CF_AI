@@ -5,7 +5,7 @@
         v-if="show"
         class="max-w-[100%] w-2/6 h-12 bg-red-500 bg-opacity-80 rounded-3xl 
         flex justify-center items-center flex-nowrap maxd:w-5/6">
-        <span class="truncate text-xl mx-3">{{ errortitle || "发生错误！" }}</span>
+        <span class="truncate text-xl mx-3">{{ errortitle || "发生错误,请联系XiaoLiao" }}</span>
       </div>
     </transition>
   </div>

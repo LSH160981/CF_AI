@@ -20,7 +20,7 @@ let outputTypeText = ref("");
 // 逐步输出主函数
 const typeText = (msgContent) => {
   let index = 0;
-  const delay = 15; // 输出速度（每毫秒的字符数）
+  const delay = 35; // 输出速度（每毫秒的字符数）
 
   // 开启定时器，并做好标识
   const typingInterval = setInterval(() => {
@@ -34,6 +34,11 @@ const typeText = (msgContent) => {
       // 清除定时器
       clearInterval(typingInterval);
     }
+    // 将页面滚动到底部
+    window.scroll({
+      top: document.body.scrollHeight,
+      behavior: "smooth", // 可以使滚动平滑
+    });
   }, delay);
 };
 // 监视传输进来的数据
