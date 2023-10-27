@@ -3,7 +3,8 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    timeout: 10000
+    // 由于是 中转服务器的原因，返回数据比较慢，这里我就把timeout关了
+    // timeout: 5000
 });
 
 //请求拦截器:将来项目中【N个请求】，只要发请求,会触发请求拦截器!!! 在发送请求前 做一些事情
