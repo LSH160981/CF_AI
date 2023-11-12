@@ -65,8 +65,8 @@ export const useMessageStore = defineStore('message', {
 
             const endpoint = "https://openkey.cloud/v1/chat/completions";
             const data = {
-                // model: "gpt-3.5-turbo",
-                model: "gpt-3.5-turbo-16k-0613",
+                // model: "gpt-3.5-turbo-16k-0613",
+                model: "gpt-4-1106-preview",
                 // 允许联系上下文
                 messages: this.messages,
                 temperature: 0.7,
