@@ -111,21 +111,21 @@ export const useMessageStore = defineStore('message', {
         },
         // 查询token余额[异步]
         check_Remaining_API_KEY(API_KEY = this.AI_API_KEY) {
-            const apiUrl = '/api/token';
-            axiosClient.post(apiUrl, { api_key: API_KEY }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then((response) => {
+            // { Remaining: 0.796, Status: 1, Total: 1, Used: 0.204 }
+            // { Error: '查询失败，API Key已失效或不存在', Status: 0 }
+            // { Error: '查询失败，API Key为空', Status: 0 }
+            let apiUrl = `https://proxy-key-remaining.proxyai.workers.dev/?token=${API_KEY}`;
+            axiosClient.get(apiUrl)
+                .then(response => {
                     if (response.Status == 1) {
-                        this.Remaining_API_KEY = response.Remaining;
+                        // console.log('Token response:', response.Remaining);
+                        this.Remaining_API_KEY = response.Remaining
                     } else if (response.Status == 0) {
-                        this.Remaining_API_KEY = "API Key已失效或不存在 error";
+                        this.errorMSG = response.Error
                     }
                 })
                 .catch(error => {
-                    console.error('Error token:', error);
+                    this.errorMSG = error.message || "请联系xiaoliao";
                 });
             return "";
         }

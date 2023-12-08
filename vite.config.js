@@ -14,14 +14,14 @@ export default defineConfig({
     }
   },
   server: {
-    proxy: {
-      '/api': {
-        // target: 'https://ai.xiaoliao.eu.org/',
-        target: 'https://billing.openkey.cloud',
-        // secure: true,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api'),
-      },
-    }
+    // proxy: {
+    //   '/api': {
+    //     // target: 'https://ai.xiaoliao.eu.org/',
+    //     target: 'https://billing.openkey.cloud',
+    //     // secure: true,
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, '/api'),
+    //   },
+    // }
   }
 })
