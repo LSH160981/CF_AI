@@ -17,10 +17,10 @@ export default defineConfig({
     proxy: {
       '/api': {
         // target: 'https://ai.xiaoliao.eu.org/',
-        // target: 'https://3335.xiaoliao.eu.org/',
-        secure: true,
+        target: 'https://billing.openkey.cloud',
+        // secure: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     }
   }

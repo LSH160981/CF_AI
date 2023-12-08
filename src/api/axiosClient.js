@@ -23,9 +23,8 @@ axiosClient.interceptors.response.use((res) => {
     if (err.message.includes("timeout")) {
         return Promise.reject("服务器超时");
     }
-    // 获取失败的信息
-    let errorMSG = JSON.parse(err.request.response).error.message || "发生错误,请联系XiaoLiao";
-    return Promise.reject(errorMSG);
+    // 获取失败的信息 
+    return Promise.reject(err.message);
 });
 
 export default axiosClient;

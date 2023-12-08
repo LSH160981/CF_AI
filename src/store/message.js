@@ -11,6 +11,8 @@ export const useMessageStore = defineStore('message', {
             is_AI_think: false,
             // 获取动态的API_KEY
             AI_API_KEY: "",
+            // token余额
+            Remaining_API_KEY: "",
             // 错误的信息
             errorMSG: "",
             // 用于存储服务器返回的数据
@@ -83,11 +85,14 @@ export const useMessageStore = defineStore('message', {
                 this.messages.push({ role: "system", content: resultMSG })
             }).catch((error) => {
                 // 这里的错误信息 在相应拦截器中已经处理过了
-                this.errorMSG = error
+                console.log(error);
+                this.errorMSG = "API 令牌过期"
             });
 
             // 恢复初始状态让，用户输入内容
             this.is_AI_think = false
+            // 查询token余额
+            this.check_Remaining_API_KEY(this.AI_API_KEY);
         },
         // 清除全部message
         clear_all_message() {
@@ -99,8 +104,30 @@ export const useMessageStore = defineStore('message', {
             await axiosClient.get('https://raw.githubusercontent.com/LSH160981/CF_Worker/main/key.txt')
                 .then((response) => {
                     // console.log(response);
-                    this.AI_API_KEY = response
+                    this.AI_API_KEY = response.trim();
+                    // 查询token余额
+                    this.check_Remaining_API_KEY(this.AI_API_KEY);
                 })
+        },
+        // 查询token余额[异步]
+        check_Remaining_API_KEY(API_KEY = this.AI_API_KEY) {
+            const apiUrl = '/api/token';
+            axiosClient.post(apiUrl, { api_key: API_KEY }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => {
+                    if (response.Status == 1) {
+                        this.Remaining_API_KEY = response.Remaining;
+                    } else if (response.Status == 0) {
+                        this.Remaining_API_KEY = "API Key已失效或不存在 error";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error token:', error);
+                });
+            return "";
         }
     },
 })
