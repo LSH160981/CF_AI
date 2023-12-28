@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axiosClient from "@/api/axiosClient.js";
+import { handlerStr } from '@/utils/handlerstr.js';
 
 // 第一个参数是你的应用中 Store 的唯一 ID。 
 export const useMessageStore = defineStore('message', {
@@ -56,43 +57,52 @@ export const useMessageStore = defineStore('message', {
         //     this.is_AI_think = false
         // },
         async get_msg_by_llm() {
+            // AI正在思考。 作用:不让用户连续输入文字
+            this.is_AI_think = true
+
             // console.log(this.messages);
             this.messages.push({
                 role: "user",
                 content: this.currentMSG
             })
 
-            // AI正在思考。 作用:不让用户连续输入文字
-            this.is_AI_think = true
-
-            const endpoint = "https://openkey.cloud/v1/chat/completions";
-            const data = {
-                // model: "gpt-3.5-turbo-16k-0613",
-                model: "gpt-4-1106-preview",
-                // 允许联系上下文
+            const apiUrl = "https://openkey.cloud/v1/chat/completions";
+            // 创建消息体
+            const requestBody = {
+                model: 'gpt-4-1106-preview',
                 messages: this.messages,
-                temperature: 0.7,
+                stream: true, // 开启流式读取
             };
             // console.log(this.AI_API_KEY);
-            await axiosClient.post(endpoint, data, {
+            // 创建Fetch请求配置
+            const fetchOptions = {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${this.AI_API_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.AI_API_KEY}`,
                 },
-            }).then((response) => {
-                // console.log(response);
-                let resultMSG = response.choices[0].message.content;
-                this.messages.push({ role: "system", content: resultMSG })
-            }).catch((error) => {
-                // 这里的错误信息 在相应拦截器中已经处理过了
-                console.log(error);
-                this.errorMSG = "API 令牌过期"
-            });
+                body: JSON.stringify(requestBody),
+            };
+            // 发起Fetch请求
+            let response = await fetch(apiUrl, fetchOptions)
+
+            // 添加一个空的
+            this.messages.push({ role: "system", content: "" })
+            // 流式读取
+            let reader = response.body.getReader();
+            let decoder = new TextDecoder();
+            while (1) {
+                let { done, value } = await reader.read();
+                if (done) { break; }
+                let content = decoder.decode(value);
+                // console.log(handlerStr(content));
+                this.messages[this.messages.length - 1].content += handlerStr(content)
+            }
 
             // 恢复初始状态让，用户输入内容
             this.is_AI_think = false
             // 查询token余额
-            this.check_Remaining_API_KEY(this.AI_API_KEY);
+            this.check_Remaining_API_KEY();
         },
         // 清除全部message
         clear_all_message() {
@@ -127,7 +137,6 @@ export const useMessageStore = defineStore('message', {
                 .catch(error => {
                     this.errorMSG = error.message || "请联系xiaoliao";
                 });
-            return "";
         }
     },
 })

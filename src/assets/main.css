@@ -16,6 +16,10 @@
   --theme-text-color: #212129;
 }
 
+html {
+  transition: all 0.5s;
+}
+
 /* 暗黑模式 */
 .dark {
   background-color: #212129;

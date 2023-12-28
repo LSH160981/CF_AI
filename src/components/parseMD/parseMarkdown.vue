@@ -9,16 +9,13 @@
     <!-- (用户的提问|系统的回复)展示 -->
     <div class="message break-words overflow-hidden">
       <p class="py-5">
-        <!-- 把每一项传给子组件 -->
-        <ParseMain :MSG="item"></ParseMain>
+        <v-md-preview :text="item.content"></v-md-preview>
       </p>
     </div>
   </div>
 </template>
 
-<script setup>
-// 引入parseMain组件
-import ParseMain from "./parseMain.vue";
+<script setup> 
 // pinia 的信息仓库
 import { useMessageStore } from "@/store/message.js";
 // 实例化 信息仓库
