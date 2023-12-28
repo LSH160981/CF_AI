@@ -85,6 +85,14 @@ export const useMessageStore = defineStore('message', {
             };
             // 发起Fetch请求
             let response = await fetch(apiUrl, fetchOptions)
+            if (!response.ok) {
+                if (response.status === 401) {
+                    this.errorMSG = "API密钥无效";
+                    return
+                }
+                this.errorMSG = "请求出错啦！";
+                return
+            }
 
             // 添加一个空的
             this.messages.push({ role: "system", content: "" })

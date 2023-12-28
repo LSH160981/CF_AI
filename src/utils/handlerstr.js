@@ -4,21 +4,28 @@
  * @returns String
  */
 export const handlerStr = (str) => {
-    // 一次性使用链式调用，避免多次声明变量
     let result_str = '';
-    str.replace(/\s/g, '')       // 去除空格
+    str.replace(/("[^"]*")|\s/g, (_, capture) => {
+        // 如果匹配到双引号内的内容，则保留原样，否则删除空格
+        return capture ? capture : '';
+    })
         .replace(/\[DONE\]/g, '')  // 去除 [DONE]
         .replace(/data:/g, '\n')   // 将 data: 替换为换行符
         .split("\n")               // 按换行符分割字符串
         .filter(item => item.trim() !== '') // 去除空项
         .map(item => JSON.parse(item))     // 解析 JSON，并返回新数组
         .forEach((item) => {
-            // console.log(item.choices[0].delta.content);
             if (item.choices[0].delta.content) {
-                result_str += item.choices[0].delta.content
+                result_str += item.choices[0].delta.content;
             }
-        })
-    return result_str
+        });
+    // 这一部分 有关页面滚动 有待商榷，是留还是删除，看情况
+    window.scroll({
+        top: document.body.scrollHeight,
+        behavior: "smooth", // 可以使滚动平滑
+    });
+
+    return result_str;
 };
 
 
