@@ -134,9 +134,6 @@ export const useMessageStore = defineStore('message', {
                         this.errorMSG = response.Error
                     }
                 })
-                .catch(error => {
-                    this.errorMSG = error.message || "请联系xiaoliao";
-                });
         }
     },
 })

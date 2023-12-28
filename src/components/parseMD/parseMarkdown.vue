@@ -5,7 +5,7 @@
     v-for="(item, index) in MessageStore.messages"
     :key="index">
     <!-- 动态的class区分(用户|系统)的头像 -->
-    <div class="shrink-0 mt-5 w-7 h-7 rounded-full" :class="user_or_system(item.role)"></div>
+    <div class="shrink-0 my-5 w-7 h-7 rounded-full" :class="user_or_system(item.role)"></div>
     <!-- (用户的提问|系统的回复)展示 -->
     <div class="message break-words overflow-hidden">
       <p class="py-5">
