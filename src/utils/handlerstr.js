@@ -12,7 +12,7 @@ export const handlerStr = (str) => {
         .replace(/\[DONE\]/g, '')  // 去除 [DONE]
         .replace(/data:/g, '\n')   // 将 data: 替换为换行符
         .split("\n")               // 按换行符分割字符串
-        .filter(item => item.trim() !== '') // 去除空项
+        .filter(Boolean)           // 去除空项
         .map(item => JSON.parse(item))     // 解析 JSON，并返回新数组
         .forEach((item) => {
             if (item.choices[0].delta.content) {

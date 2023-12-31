@@ -33,5 +33,5 @@ div.vuepress-markdown-body {
   background-color: #ffffff00;
 }
 div.vuepress-markdown-body:not(.custom) {
-  padding: 0;
+  padding: 0 5px;
 }
