@@ -10,8 +10,8 @@ export const useMessageStore = defineStore('message', {
             currentMSG: "",
             // false:没有发起网络请求 | true:正在发起网络请求,不让用户继续输入内容
             is_AI_think: false,
-            // 获取动态的API_KEY
-            AI_API_KEY: "",
+            // 获取 API_KEY
+            AI_API_KEY: "sk-foH2NFqFeSDLfj3OiCttrsB0Gza9JZBYBwE9RutauvBc5ipD",
             // token余额
             Remaining_API_KEY: "",
             // 错误的信息
@@ -66,10 +66,11 @@ export const useMessageStore = defineStore('message', {
                 content: this.currentMSG
             })
 
-            const apiUrl = "https://openkey.cloud/v1/chat/completions";
+            // const apiUrl = "https://openkey.cloud/v1/chat/completions";
+            const apiUrl = "https://api.chatanywhere.com.cn/v1/chat/completions";
             // 创建消息体
             const requestBody = {
-                model: 'gpt-4-1106-preview',
+                model: 'gpt-3.5-turbo',
                 messages: this.messages,
                 stream: true, // 开启流式读取
             };
@@ -86,10 +87,6 @@ export const useMessageStore = defineStore('message', {
             // 发起Fetch请求
             let response = await fetch(apiUrl, fetchOptions)
             if (!response.ok) {
-                if (response.status === 401) {
-                    this.errorMSG = "API密钥无效";
-                    return
-                }
                 this.errorMSG = "请求出错啦！";
                 return
             }
@@ -99,7 +96,7 @@ export const useMessageStore = defineStore('message', {
             // 流式读取
             let reader = response.body.getReader();
             let decoder = new TextDecoder();
-            while (1) {
+            while (true) {
                 let { done, value } = await reader.read();
                 if (done) { break; }
                 let content = decoder.decode(value);
@@ -109,39 +106,11 @@ export const useMessageStore = defineStore('message', {
 
             // 恢复初始状态让，用户输入内容
             this.is_AI_think = false
-            // 查询token余额
-            this.check_Remaining_API_KEY();
         },
         // 清除全部message
         clear_all_message() {
             this.messages = []
             this.is_AI_think = false
         },
-        // 获取动态的API_KEY
-        async getKeyByGithub() {
-            await axiosClient.get('https://raw.githubusercontent.com/LSH160981/CF_Worker/main/key.txt')
-                .then((response) => {
-                    // console.log(response);
-                    this.AI_API_KEY = response.trim();
-                    // 查询token余额
-                    this.check_Remaining_API_KEY(this.AI_API_KEY);
-                })
-        },
-        // 查询token余额[异步]
-        check_Remaining_API_KEY(API_KEY = this.AI_API_KEY) {
-            // { Remaining: 0.796, Status: 1, Total: 1, Used: 0.204 }
-            // { Error: '查询失败，API Key已失效或不存在', Status: 0 }
-            // { Error: '查询失败，API Key为空', Status: 0 }
-            let apiUrl = `https://proxy-key-remaining.proxyai.workers.dev/?token=${API_KEY}`;
-            axiosClient.get(apiUrl)
-                .then(response => {
-                    if (response.Status == 1) {
-                        // console.log('Token response:', response.Remaining);
-                        this.Remaining_API_KEY = response.Remaining
-                    } else if (response.Status == 0) {
-                        this.errorMSG = response.Error
-                    }
-                })
-        }
     },
 })

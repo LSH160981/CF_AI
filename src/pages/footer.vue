@@ -27,7 +27,7 @@
     v-else
     class="gen-text-wrapper bg-gray-400 rounded"
     :class="{ 'bg-opacity-30': themeStore.sun_or_moon ? true : false }">
-    <span class="h-12 leading-[3rem] select-none">CF AI is thinking...</span>
+    <span class="h-12 leading-[3rem] select-none">AI is thinking...</span>
   </div>
   <!-- 个人的信息导航 | 源代码的出处 -->
   <p class="mt-8 text-xs opacity-40 select-none">
@@ -35,8 +35,6 @@
     <a href="https://github.com/LSH160981/CF_AI" target="_blank"> XiaoLiao </a>
     <span class="px-1">|</span>
     <a href="https://github.com/ddiu8081/chatgpt-demo" target="_blank"> Source Code </a>
-    <span class="px-1">| </span>
-    <span>{{ MessageStore.Remaining_API_KEY }}</span>
   </p>
 </template>
 

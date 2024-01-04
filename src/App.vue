@@ -17,18 +17,12 @@ import Footer from "./pages/footer.vue";
 import Bottom from "./components/bottom.vue";
 import { onMounted } from "vue";
 
-// pinia 的信息仓库
-import { useMessageStore } from "@/store/message.js";
-// 实例化 信息仓库
-let MessageStore = useMessageStore();
 // pinia 的主题仓库
 import { useThemeStore } from "@/store/theme.js";
 // 实例化 主题仓库
 let themeStore = useThemeStore();
 
 onMounted(() => {
-  // 提前获取API_key
-  MessageStore.getKeyByGithub();
   // 通过JavaScript选择HTML元素并添加class
   let htmlElement = document.querySelector("html");
   //  更改主题颜色、文字颜色
