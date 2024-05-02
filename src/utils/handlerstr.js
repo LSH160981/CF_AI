@@ -5,20 +5,12 @@
  */
 export const handlerStr = (str) => {
     let result_str = '';
-    str.replace(/("[^"]*")|\s/g, (_, capture) => {
-        // 如果匹配到双引号内的内容，则保留原样，否则删除空格
-        return capture ? capture : '';
-    })
-        .replace(/\[DONE\]/g, '')  // 去除 [DONE]
-        .replace(/data:/g, '\n')   // 将 data: 替换为换行符
-        .split("\n")               // 按换行符分割字符串
-        .filter(Boolean)           // 去除空项
-        .map(item => JSON.parse(item))     // 解析 JSON，并返回新数组
-        .forEach((item) => {
-            if (item.choices[0].delta.content) {
-                result_str += item.choices[0].delta.content;
-            }
-        });
+    const regex = /{"content":"(.*?)"}/g;
+    const matches = [...str.matchAll(regex)];
+    // 取捕获组的值 
+    matches.map(match => {
+        result_str += JSON.parse(match[0]).content
+    });
     // 这一部分 有关页面滚动 有待商榷，是留还是删除，看情况
     window.scroll({
         top: document.body.scrollHeight,
